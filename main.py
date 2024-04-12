@@ -42,7 +42,6 @@ class Student:
             'full_name': self.full_name
         }
 
-
 class Use_case:
     def __init__(self, groups):
         self.groups = groups
@@ -77,6 +76,40 @@ class Use_case:
             if group.id == group_id:
                 return group
         return None
+    
+
+    def get_schedule(self, group_id):
+        return {
+            'id': 0,
+            'group_id': group_id,
+            'days': {
+                'Mon': [
+                    {'number' : 2, 'name' : 'Основы военной подготовки', 'class' : '24-01', 'type': 'lecture'}
+                ],
+                'Tue' : [
+                    {'number' : 2, 'name' : 'Микроконтроллерные системы', 'class' : '32-04', 'type' : 'lecture'},
+                    {'number' : 3, 'name' : 'Корпоративные сети', 'class' : '32-04', 'type' : 'lecture'},
+                    {'number' : 4, 'name' : 'Корпоративные сети', 'class' : '22-10', 'type' : 'labwork'},
+                    {'number' : 5, 'name' : 'Моделирование', 'class' : '22-09', 'type' : 'labwork'}
+                ],
+                'Wed' : [
+                    {'number' : 1, 'name' : 'Основы искусственного интеллекта', 'class' : '51-02в', 'type':'practice'},
+                    {'number' : 2, 'name' : 'Микроконтроллерные системы', 'class' : '52-09', 'type' : 'labwork'},
+                    {'number' : 4, 'name' : 'Основы искусственного интеллекта', 'class' : '32-04', 'type':'lecture'}
+                ],
+                'Fri' : [
+                    {'number' : 1, 'name' : 'Системное программное обеспечение', 'class' : '32-04', 'type':'labwork'},
+                    {'number' : 2, 'name' : 'Физическая культура', 'class' : 'Спортзал', 'type':'practice'},
+                    {'number' : 3, 'name' : 'Моделирование', 'class' : '32-04', 'type':'lecture'},
+                    {'number' : 4, 'name' : 'Схемотехника', 'class' : '22-09', 'type':'lecture'},
+                ],
+                'Sat' : [
+                    {'number' : 1, 'name' : 'Основы военной подготовки', 'class' : '24-06', 'type':'practice'},
+                    {'number' : 3, 'name' : 'Организация ЭВМ', 'class' : '32-04', 'type' : 'lecture'},
+                    {'number' : 4, 'name' : 'Основы искусственного интеллекта', 'class' : '22-13', 'type':'labwork'}
+                ]
+            }
+        }
     
 
 fake = Faker('ru_RU')
