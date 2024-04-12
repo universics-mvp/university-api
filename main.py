@@ -9,9 +9,11 @@ class Id_counter:
     def __init__ (self, start_value=0):
         self.count = start_value
     
+
     def get_id(self):
         self.count += 1
         return self.count
+
 
 class Group:
     def __init__(self, id, number):
@@ -24,6 +26,7 @@ class Group:
             'id': self.id,
             'number': self.number
         }
+
 
 class Student:
     def __init__(self, id, group_id, full_name):
@@ -60,6 +63,13 @@ class Use_case:
                 for student in group.students:
                     students_ids.append(student.id)
         return students_ids
+    
+
+    def get_groups(self):
+        groups_ids = []
+        for group in self.groups:
+            groups_ids.append(group.id)
+        return groups_ids
 
 
     def get_group_by_id(self, group_id):
@@ -67,8 +77,7 @@ class Use_case:
             if group.id == group_id:
                 return group
         return None
-
-
+    
 
 fake = Faker('ru_RU')
 group_id_counter = Id_counter(1000)
@@ -84,6 +93,7 @@ def generate_students(num_students, group_id):
         students.append(student)
     return students
 
+
 def setup_groups(num_groups, students_per_group):
     global group_id_counter
     groups = []
@@ -95,9 +105,11 @@ def setup_groups(num_groups, students_per_group):
         group.students = group_students
     return groups
 
+
 def save_students_to_file(students, filename):
     with open(filename, 'wb') as f:
         pickle.dump(students, f)
+
 
 def load_students_from_file(filename):
     if os.path.exists(filename):
@@ -105,6 +117,7 @@ def load_students_from_file(filename):
             return pickle.load(f)
     else:
         return None
+
 
 def setup_routes(app, use_case):
     @app.route('/')
@@ -134,6 +147,15 @@ def setup_routes(app, use_case):
             return json.dumps(students_ids), 200
         else:
             return json.dumps({'error': 'Group not found or has no students'}), 404
+        
+    @app.route('/group', methods=['GET'])
+    def get_groups():
+        groups_ids = use_case.get_groups()
+        if groups_ids:
+            return json.dumps(groups_ids), 200
+        else:
+            return json.dumps({'error': 'No groups (HOW?)'}), 404
+
 
 if __name__ == '__main__':
     students_filename = 'students.pkl'
