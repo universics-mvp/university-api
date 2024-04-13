@@ -188,6 +188,14 @@ def setup_routes(app, use_case):
             return json.dumps(groups_ids), 200
         else:
             return json.dumps({'error': 'No groups (HOW?)'}), 404
+        
+    @app.route('/schedule/<int:group_id>', methods=['GET'])
+    def get_schedule(group_id):
+        schedule = use_case.get_schedule(group_id)
+        if schedule:
+            return json.dumps(schedule, ensure_ascii=False), 200
+        else:
+            return json.dumps({'error': 'Group not found'}), 404
 
 
 if __name__ == '__main__':
